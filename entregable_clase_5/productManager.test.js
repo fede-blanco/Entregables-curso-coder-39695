@@ -1,4 +1,4 @@
-import ProductManager from "./ProductManager.js";
+import ProductManager from "../entregable_clase_6/src/ProductManager.js";
 
 // ----------------------------------------------------------------------------------------------------
 // --------------- Función que ejecuta las pruebas de una en una al correr el archivo -----------------

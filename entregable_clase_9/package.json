@@ -1,14 +1,13 @@
 {
   "type": "module",
-  "name": "entregable_clase_6_servidores_web",
+  "name": "entregable_clase_8",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "node .",
     "test": "nodemon ."
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -1,0 +1,112 @@
+[
+  {
+    "title": "Producto 1",
+    "description": "Este es un producto de prueba",
+    "price": 100,
+    "thumbnails": [],
+    "code": "abc1",
+    "stock": 10,
+    "category": "Home",
+    "status": true,
+    "id": "b5d0631a-ad60-4b4c-9148-9205ec8b0178"
+  },
+  {
+    "title": "Producto 2",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnails": [],
+    "code": "abc2",
+    "stock": 20,
+    "category": "Home",
+    "status": true,
+    "id": "b09fce60-e86c-452c-b3c4-d4be1349f635"
+  },
+  {
+    "title": "Producto 3",
+    "description": "Este es un producto de prueba",
+    "price": 300,
+    "thumbnails": [],
+    "code": "abc3",
+    "stock": 30,
+    "category": "Home",
+    "status": true,
+    "id": "39f5fcc2-8ac8-4849-a9e8-3ba7d603eaed"
+  },
+  {
+    "title": "Producto 4",
+    "description": "Este es un producto de prueba",
+    "price": 400,
+    "thumbnails": [],
+    "code": "abc4",
+    "stock": 40,
+    "category": "Home",
+    "status": true,
+    "id": "e791a46e-923a-45e8-90dc-8a326c305978"
+  },
+  {
+    "title": "Producto 5",
+    "description": "Este es un producto de prueba",
+    "price": 500,
+    "thumbnails": [],
+    "code": "abc5",
+    "stock": 50,
+    "category": "Home",
+    "status": true,
+    "id": "e4c48219-9b9e-4bd3-8f0c-f146aeb282e1"
+  },
+  {
+    "title": "Producto 6",
+    "description": "Este es un producto de prueba",
+    "price": 600,
+    "thumbnails": [],
+    "code": "abc6",
+    "stock": 60,
+    "category": "Home",
+    "status": true,
+    "id": "e44edefd-3c8b-44db-bf6a-a4a3966676a0"
+  },
+  {
+    "title": "Producto 7",
+    "description": "Este es un producto de prueba",
+    "price": 700,
+    "thumbnails": [],
+    "code": "abc7",
+    "stock": 70,
+    "category": "Home",
+    "status": true,
+    "id": "ebef05e2-60fd-4396-8f9d-016b9666eeb9"
+  },
+  {
+    "title": "Producto 8",
+    "description": "Este es un producto de prueba",
+    "price": 800,
+    "thumbnails": [],
+    "code": "abc8",
+    "stock": 80,
+    "category": "Home",
+    "status": true,
+    "id": "d7fc0914-c495-4fb4-b165-605353f5f74f"
+  },
+  {
+    "title": "Producto 9",
+    "description": "Este es un producto de prueba",
+    "price": 900,
+    "thumbnails": [],
+    "code": "abc9",
+    "stock": 90,
+    "category": "Home",
+    "status": true,
+    "id": "cff67ba1-0fbe-411f-a04a-75d677612a9c"
+  },
+  {
+    "title": "Producto 10",
+    "description": "Este es un producto de prueba",
+    "price": 1000,
+    "thumbnails": [],
+    "code": "abc10",
+    "stock": 100,
+    "category": "Home",
+    "status": true,
+    "id": "8bad6071-ede0-4379-a401-9fcfa6f42984"
+  }
+]
