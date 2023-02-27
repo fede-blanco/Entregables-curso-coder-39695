@@ -1,0 +1,17 @@
+<h1>Productos</h1>
+{{#if hayProductos}}
+  <ul>
+    {{#each productsAdquired}}
+      <li><strong>{{this.title}}</strong>
+        <br />
+        <strong>Price</strong>: ${{this.price}}
+        <br />
+        <strong>Description</strong>:
+        {{this.description}}
+        <br />
+        <strong>Id</strong>:
+        {{this.id}}</li>
+      <br />
+    {{/each}}
+  </ul>
+{{/if}}

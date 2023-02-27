@@ -1,0 +1,114 @@
+html {
+  font-size: 16px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: azure;
+}
+
+h1 {
+  font-size: 4rem;
+  width: 100%;
+  text-shadow: 3px 3px 5px #f4f9c8;
+  text-align: center;
+  margin: 1rem auto;
+}
+
+h2 {
+  font-size: 2.5rem;
+  width: 100%;
+  text-shadow: 3px 3px 5px #f4f9c8;
+  text-align: center;
+}
+
+.prod-title {
+  text-decoration: underline;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.forms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.forms-column-1,
+.forms-column-2 {
+  width: 40vw;
+  min-width: 24rem;
+}
+
+
+.custom-form {
+  background-color:antiquewhite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 0 1.5rem rgb(84, 82, 45);
+}
+
+.custom-form legend {
+  font-size: 2rem;
+  width: 100%;
+  padding: 1rem;
+  text-shadow: 2px 2px 5px #f4f9c8;
+}
+
+.custom-form .form-input {
+  font-size: 1rem;
+  width: 80%;
+  padding: .3rem .5rem;
+  margin: .2rem 0;
+  border: solid 2px transparent;
+  border-radius: .5rem;
+}
+
+.custom-form .input-submit {
+  background-color: darkkhaki;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 1rem 0;
+  width: 50%;
+  box-shadow: .3rem .3rem .3rem rgb(84, 82, 45);
+}
+
+/* ----------- LISTA DE PRODUCTOS ------------ */
+
+#product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-inline-start: 0;
+}
+
+#product-list li {
+  min-width: 330px;
+  max-width: 330px;
+  margin: .5rem;
+  list-style:none;
+
+  background-color: rgba(0, 255, 255, 0.299);
+  border-radius: 1rem;
+  box-shadow: 0 0 5px;
+  padding: 1rem;
+}
+
+
+

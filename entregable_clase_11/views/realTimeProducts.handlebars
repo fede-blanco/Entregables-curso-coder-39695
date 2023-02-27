@@ -1,0 +1,64 @@
+<h1>Productos</h1>
+<div class="container">
+  <div class="forms">
+    <div class="forms-column-1">
+    <div id="add-form" class="custom-form">
+      <legend>Agregar un producto</legend>
+      <input type="text"  class="form-input" id="title-add" placeholder="Title">
+      <input type="text"  class="form-input" id="description-add" placeholder="Description">
+      <input type="number"  class="form-input" id="price-add" placeholder="Price">
+      <input type="file"  class="form-input" id="thumbnails-add" placeholder="Thumbnails">
+      <input type="text"  class="form-input" id="code-add" placeholder="Code">
+      <input type="number"  class="form-input" id="stock-add" placeholder="Stock">
+      <input type="text"  class="form-input" id="category-add" placeholder="Category">
+      <label for="status" class="form-input" >Status:<input type="checkbox" id="status-add" placeholder="Status"> </label>
+      <button id="btn-add" class="form-input input-submit">Agregar!</button>
+    </div>
+    <div id="delete-form" class="custom-form">
+      <legend>Eliminar un producto</legend>
+      <input type="text"  class="form-input" id="id-delete" placeholder="Id del producto a eliminar">
+      <button id="btn-delete" class="form-input input-submit">Eliminar!</button>
+    </div>
+
+    </div>
+    <div class="forms-column-2">
+    <div id="update-form" class="custom-form">
+      <legend>Actualizar un producto</legend>
+      <input type="text"  class="form-input" id="id-update" placeholder="Id del producto a modificar">
+      <input type="text"  class="form-input" id="title-update" placeholder="Title">
+      <input type="text"  class="form-input" id="description-update" placeholder="Description">
+      <input type="number"  class="form-input" id="price-update" placeholder="Price">
+      <input type="file"  class="form-input" id="thumbnails-update" placeholder="Thumbnails">
+      <input type="text"  class="form-input" id="code-update" placeholder="Code">
+      <input type="number"  class="form-input" id="stock-update" placeholder="Stock">
+      <input type="text"  class="form-input" id="category-update" placeholder="Category">
+      <label for="status" class="form-input" >Status:<input type="checkbox" id="status-update" placeholder="Status"> </label>
+      <button id="btn-update" class="form-input input-submit">Modificar!</button>
+    </div>
+    </div>
+  </div>
+  <div>
+    <h2>Lista de productos</h2>
+    {{#if hayProductos}}
+      <ul id="product-list">
+        {{#each productsAdquired}}
+          <li id="{{this.id}}"><strong class="prod-title">{{this.title}}</strong>
+            <br />
+            <strong>Price</strong>: ${{this.price}}
+            <br />
+            <strong>Description</strong>:
+            {{this.description}}
+            <br />
+            <strong>Id</strong>:
+            {{this.id}}</li>
+          <br />
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js">
+
+</script>
