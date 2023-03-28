@@ -1,0 +1,2 @@
+// export const MONGODB_CNX_STR = 'mongodb://localhost/MiPrimeraDB'
+export const MONGODB_CNX_STR = 'mongodb+srv://blancofedem:entregascoder94@cluster0.nutijb3.mongodb.net/coderhouse?retryWrites=true&w=majority'
