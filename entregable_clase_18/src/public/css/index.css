@@ -11,6 +11,8 @@ html {
 
 body {
 background-image: url("../assets/nightSky.avif");
+background-size: cover ;
+
 }
 
 @keyframes pulsate {
@@ -158,21 +160,8 @@ h2 {
   margin: 1rem 0;
   width: 50%;
   cursor:pointer;
-  /* box-shadow: .3rem .3rem .3rem rgb(84, 82, 45); */
-
-  /* border: 0.2rem solid #fff;
-  border-radius: .5rem;
-  padding: 0.4em;
-  box-shadow: 0 0 .2rem #fff,
-              0 0 .2rem #fff,
-              0 0 2rem #bc13fe,
-              0 0 0.8rem #bc13fe,
-              0 0 2.8rem #bc13fe,
-              inset 0 0 1.3rem #bc13fe; */
 
   animation: pulsate 2.5s infinite alternate; 
-
-
 }
 
 #delete-form {
@@ -184,7 +173,7 @@ h2 {
 }
 /* ----------- LISTA DE PRODUCTOS ------------ */
 
-#product-list {
+.product-list {
   color:#fff;
   display: flex;
   flex-wrap: wrap;
@@ -192,7 +181,7 @@ h2 {
   padding-inline-start: 0;
 }
 
-#product-list li {
+.product-list li {
   min-width: 330px;
   max-width: 330px;
   margin: .5rem;
@@ -204,7 +193,81 @@ h2 {
   border-radius: 1rem;
   box-shadow: 0 0 5px;
   padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.add-to-cart-btn-container {
+  display: flex;
+}
+
+.add-to-cart-btn {
+  padding: .5rem;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: .5rem;
+  border-radius: .5rem;
+  border: none;
+  font-weight: bold;
+
+}
+
+#cart-list {
+  color:#fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-inline-start: 0;
+}
+
+#cart-list li {
+  min-width: 330px;
+  max-width: 330px;
+  margin: .5rem;
+  list-style:none;
+
+  background-color: rgba(0, 255, 255, 0.299);
+  backdrop-filter: blur( 2px );
+-webkit-backdrop-filter: blur( 2px );
+  border-radius: 1rem;
+  box-shadow: 0 0 5px;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.delete-from-cart-btn-container {
+display: flex;
+}
+
+.delete-from-cart-btn {
+  padding: .5rem;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: .5rem;
+  border-radius: .5rem;
+  border: none;
+  font-weight: bold;
 }
 
 
+/* ********************** PAGINATION *********************** */
+
+.pagination {
+  display: flex;
+}
+
+.next-prev-pagination-btn{
+  padding: .5rem;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: .5rem;
+  border-radius: .5rem;
+  border: none;
+  font-weight: bold;
+}
 

@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
-//clase que instancia objetos producto
+
 
 function validateTitle(valor){
   if(typeof valor !== "string" ) throw new Error("no se ingresó el título - Product.js")
@@ -32,12 +31,6 @@ function validateCategory(valor){
   if(!valor) throw new Error("no se ingresó la categoría - Product.js")
   return valor;
 }
-// function validateId(valor){
-//   if(!valor) {
-//     valor = uuidv4();
-//   }
-//   return valor;
-// }
 
 export default class Product {
   title;
@@ -48,7 +41,6 @@ export default class Product {
   stock;
   category;
   status;
-  // id;
 
   constructor({
     title,
@@ -60,10 +52,7 @@ export default class Product {
     category,
     //status inicializa true
     status = true,
-    // id,
   }) {
-   
-    // this.id = validateId(id);
     this.title = validateTitle(title);
     this.description = validateDescription(description);
     this.price = validatePrice(price);
@@ -72,6 +61,5 @@ export default class Product {
     this.stock = validateStock(stock);
     this.category = validateCategory(category);
     this.status = status;
-    // return this;
   }
 }

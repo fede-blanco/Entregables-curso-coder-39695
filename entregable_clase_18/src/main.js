@@ -3,14 +3,22 @@ import __dirname from "./utils.js"
 import routerProducts from "./routes/routerProducts.js"
 import routerCarts from "./routes/routerCarts.js"
 import viewsRouter from "./routes/views.router.js"
-import { productsManager } from "./managers/ProductManager.js"
+import { productManager } from "./managers/ProductManager.js"
+import { productsService } from "./services/products.service.js"
 //importamos el motor de planteillas de handlebars
 import { engine } from "express-handlebars"
 // Importamos el servidor de socket
 import { Server as SocketIoServer } from "socket.io"
+import { PORT } from "./config/server.js"
+import { MONGODB_CNX_STR_LOCAL, MONGODB_CNX_STR_REMOTE } from "./config/mongodb.js"
+import mongoose from "mongoose"
+import { cartsService } from "./services/carts.service.js"
+import { ObjectId } from "mongoose"
 
 //creamos el servidos express en y lo almacenamos en la variable app
 const app = express()
+// await mongoose.connect(MONGODB_CNX_STR_LOCAL)
+await mongoose.connect(MONGODB_CNX_STR_REMOTE)
 
 // Para recibir json en el cuerpo de la petición y recibir datos por url
 app.use(express.json())
@@ -34,7 +42,7 @@ app.use("/api/carts", routerCarts)
 app.use("/", viewsRouter)
 
 // nos conectamos al puerto de entrada y salida
-const puerto = 8080
+const puerto = PORT
 const ConnectedServer = app.listen(puerto, () => {
   console.log(`Conectado en el puerto ${puerto}`)
 })
@@ -48,30 +56,78 @@ io.on("connection", (socket) => {
 
   socket.on("addProduct", async (prod) => {
     //En el back agrego un producto al json
-    await productsManager.addProduct(prod)
+    await productsService.addProduct(prod)
     //Obtengo la lista de productos proveniente de json actualizada
-    const prodListItems = await productsManager.getProducts()
+    const prodListItems = await productsService.getProducts()
     //envio el mensaje con los productos al front
     socket.emit("updateProductsList",prodListItems )
   })
   
   socket.on("updateProduct", async (prodId, prod) => {
     //En el back modifico un producto al json
-    await productsManager.updateProduct(prodId, prod)
-    //Obtengo la lista de productos proveniente de json actualizada
-    const prodListItems = await productsManager.getProducts()
+    await productsService.updateProduct(prodId, prod)
+    //Obtengo la lista de productos proveniente de la base de datos actualizada
+    const data = await productsService.getProducts(prod)
+    const prodListItems = data.docs;
     //envio el mensaje con los productos al front
     socket.emit("updateProductsList",prodListItems )   
   })
   
   socket.on("deleteProduct", async (productId) => {
     //En el back elimino un producto al json
-    await productsManager.deleteProduct(productId);
+    await productsService.deleteProduct(productId);
     //Obtengo la lista de productos proveniente de json actualizada
-    const prodListItems = await productsManager.getProducts()
+    const prodListItems = await productsService.getProducts()
     //envio el mensaje con los productos al front
     socket.emit("updateProductsList",prodListItems )   
   })
 
+  socket.on("deleteProductFromCart", async (productId) => {
 
+    //traingo el ObjectId del carrito
+    const carts = await cartsService.getCarts()
+    const cartSelected = carts[0]
+    const cartSelectedId = cartSelected._id
+
+    //Le saco las comillas de los extremos
+    const prodSinComillas = productId.replace(/`/g, '')
+
+    //Genero un ObjectId de mongoose con este id
+    const productObjId = new mongoose.Types.ObjectId(prodSinComillas);
+
+    await cartsService.deleteFullProductFromCart(cartSelectedId, productObjId)
+
+    //Obtengo la lista de productos en el carrito
+    const cartUpdated = await cartsService.getCartById(cartSelectedId)
+
+    const cartResponse = {
+      status: "success",
+      payload: cartUpdated.products,
+    }
+     //envio el mensaje con los productos al front
+     socket.emit("updateCartList",cartResponse )  
+  })
+
+  socket.on("addProductToCart", async (productId) => {
+    // En el back agrego el producto al carrito
+    const carts = await cartsService.getCarts()
+    const cartSelected = carts[0]
+    const cartSelectedId = cartSelected._id
+    
+    const prodSinComillas = productId.replace(/`/g, '')
+
+    const productObjId = new mongoose.Types.ObjectId(prodSinComillas);
+
+    await cartsService.addProductToCart(cartSelectedId,productObjId)
+
+    const cartUpdated = await cartsService.getCartById(cartSelectedId)
+
+    const cartResponse = {
+      status: "success",
+      payload: cartUpdated.products,
+    }
+
+    socket.emit("updateCartList", cartResponse)
+
+  })
 })
