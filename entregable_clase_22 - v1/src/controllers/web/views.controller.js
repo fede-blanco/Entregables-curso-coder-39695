@@ -208,7 +208,7 @@ export async function cartViewController(req, res) {
     try {
       res.render('register' , {
         style: 'index.css',
-        pageTitle: "Registrate!!",
+        pageTitle: "Registro de Usuario",
       }) 
     } catch (error) {
       throw new Error(`Hubo un error en registerViewController - views.router.js ${error}`)
@@ -220,7 +220,7 @@ export async function cartViewController(req, res) {
     try {
       res.render('login', {
         style: 'index.css',
-        pageTitle: "Login",
+        pageTitle: "Formulario de login",
         })
     } catch (error) {
       throw new Error(`Hubo un error en loginViewController - views.router.js ${error}`)
