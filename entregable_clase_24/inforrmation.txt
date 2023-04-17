@@ -1,0 +1,16 @@
+Para empezar hice:
+
+1- Instale:
+jasonwebtoken
+passport-jwt
+cookie-parser
+
+2- Agrego la creacion de una cookie en elcontrolador de "registerController" de userscontroller.js.
+LA opcion --> maxAge: 24 * 60 * 60 * 1000 --> es opcional
+--> 
+    const acces_token = createHash(user)
+    res.cookie("authorization", acces_token, {signed: true, httpOnly: true})
+    res.json(user)
+
+3- lo mismo hay que hacer con el login en sessions.controller.js
+
