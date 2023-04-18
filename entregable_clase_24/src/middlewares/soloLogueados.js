@@ -23,6 +23,8 @@ export function soloLogueadosView(req, res, next) {
     next()
 }
 
+
+//funcion de primer orden que verifica si el rol es el mismo y permite seguir o da error
 export function RoleAuth(role) {
   return (req, res, next) => {
       if (req.user?.rol === role) return next()
