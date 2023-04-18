@@ -37,7 +37,8 @@ export async function productsController(req, res) {
     res.render ("index", {
       hayProductos: response.payload.length > 0,
       response,
-      user: req.session.user,
+      // user: req.session.user, //--> lo comentamos porque ya no eusamos mas sessions sino que JWT
+      user: req.user,
     })
 
   } catch (error) {
@@ -95,7 +96,7 @@ export async function realTimeProductsController(req, res) {
 }
 
 //Funcion que Controla la acción de la url (GET) "/products" 
-export async function productsViewController(req, res) {
+export async function productsViewController(req, res, next) {
   try {
     const options = {
       //variables que se van a conseguir de los parametros pasador por el url

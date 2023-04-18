@@ -1,16 +1,221 @@
 Para empezar hice:
 
 1- Instale:
-jasonwebtoken
+jsonwentoken
 passport-jwt
 cookie-parser
 
-2- Agrego la creacion de una cookie en elcontrolador de "registerController" de userscontroller.js.
-LA opcion --> maxAge: 24 * 60 * 60 * 1000 --> es opcional
---> 
-    const acces_token = createHash(user)
-    res.cookie("authorization", acces_token, {signed: true, httpOnly: true})
-    res.json(user)
+1.5 - agrego cookie parser en app.js o main.js
 
-3- lo mismo hay que hacer con el login en sessions.controller.js
+//Hay que agregar cookie-parser para poder trabajar con JWT y guardarlo en una cookie
+import cookieParser from "cookie-parser"
+import { COOKIE_SECRET } from "./config/auth.config.js"
+
+//Hay que agregar cookie-parser para poder trabajar con JWT y guardarlo en una cookie y le psamos como parametro la palabra secreta para parsear
+app.use(cookieParser(COOKIE_SECRET))
+
+2- Agrego la estrategia
+
+passport.use('jwt', new JwtStrategy({
+    jwtFromRequest: ExtractJwt.fromExtractors([
+      //Toda esta funcion podria estar modularizada e importada y utilizada aqui
+      function (req) {
+        let token = null
+        //se fija que tmb haya signedCookies para que no este corrompida
+        if (req && req.signedCookies) {
+            //Lo busca en las signedCookies con el nombre "jwt_authorization" por lo cual al guardarlo se debe hacer con el mismo nombre
+            token = req.signedCookies['jwt_authorization']
+        }
+        return token
+    }
+  
+  ]),
+    secretOrKey: JWT_PRIVATE_KEY,
+}, async (jwt_payload, done) => {
+    try {
+      //Aqui podria haber algun tipo de validacion (que el token este y q sea valido por ej)
+        done(null, jwt_payload) // null indica que no hay error y payload es el contenido del token, ya descifrado
+    } catch (error) {
+      // Se podria poner un error personalizado
+        done(error)
+    }
+}))
+
+3 - agrego los middlewares que invocan passport.authenticate
+
+// Se crean estas dos funciones separadas para api y par aviews para poder hacer un mejor manejo de errores
+
+export function autenticacionJwtApi(req, res, next) {
+  //usamos la estrategia para autenticar el token
+    passport.authenticate('jwt', (error, user, info) => {
+        if (error || !user) return next(new AuthError())
+        // cargo el usuario en la peticion
+        req.user = user
+        // Hay que hacer estas funciones que se autoinvocan porque passport.authenticate no tiene "next()" por lo que el que debemos utilizar es el que viene del middleware que nosotros creamos al cual le pasamos ese "next()" como parametro
+        next()
+    })(req, res, next) // --> Mi middleware automaticamente invoca a la estrategia de passport.authenticate como si fuera express (req, res, next)
+}
+
+export function autenticacionJwtView(req, res, next) {
+    passport.authenticate('jwt', (error, user) => {
+        if (error || !user) return res.redirect('/login')
+        req.user = user
+        next()
+    })(req, res, next) // --> Mi middleware automaticamente invoca a la estrategia de passport.authenticate como si fuera express (req, res, next)
+}
+
+4 - Elimino lo respectivo a "session"
+
+en passport.js -->
+
+// export const passportSession = passport.session() // --> la comentamos luego de agregar JWT que cumple una funcion similar
+
+/ // esto lo tengo que agregar para que funcione passport! copiar y pegar, nada mas.
+// passport.serializeUser((user, next) => { 
+//   next(null, user) 
+// })// --> la comentamos luego de agregar JWT que cumple una funcion similar
+// passport.deserializeUser((user, next) => { 
+//   next(null, user) 
+// })// --> la comentamos luego de agregar JWT que cumple una funcion similar
+
+
+en main.js -->
+
+// // // Middleware para sesiones en nuestro servidor express
+// // // La función de "session" recibe como parametro un objeto con opciones que configuraran la sesión
+// app.use(session({
+//   store: MongoStore.create({
+//     mongoUrl: MONGODB_CNX_STR_REMOTE,
+//     mongoOptions: {useNewUrlParser:true, useUnifiedTopology:true},
+//     // ttl:15,
+//   }),
+//   //el secret es necesario porque sessions trabaja siempre con cookies firmadas e cookieparse
+//   secret:"fedecoderhouse",
+//   resave: false,
+//   saveUninitialized:false
+// })) // --> la comentamos luego de agregar JWT que cumple una funcion similar
+
+// app.use(passportSession) // --> lo comentamos luego de agregar JWT que cumple una funcion similar
+
+5 - asentamos en las autenticaciones de las estrategias que no queremos utilizar "Session"
+
+//"session: false" --> al venir por defecto en true le debo decir a las estrategias que no quiero usar session para que no ahga nada al respecto de la misma
+export const autenticacionUserPass = passport.authenticate('local', {
+  session:false, 
+  failWithError: true,
+  //  successRedirect: "/products" //--> no lo pongo por este medio porque lo hago en login.js
+   })
+export const autenticacionPorGithub = passport.authenticate('github', {
+  session:false,
+   failWithError: true,
+   scope: ['user:email'] })
+export const antenticacionPorGithub_CB = passport.authenticate('github', {
+  session:false, failWithError: true })
+
+
+  6- Al no tener session debemos generar un JWT y mandarlo en la cookie por nuestros propios medios porque passport no lo hace
+
+users.controller.js --> 
+
+export async function registerUserController (req, res, next) {
+    const { first_name, last_name, email, age, password } = req.body
+    //Luego le vendria bien agregar una capa mas de seguridad con capa de "services" y manager
+    const exists = await usersService.getUserByEmail(email )
+
+    if (exists) return res.status(400).send({ status: "error", error: "User already exists" }).redirect("/login")
+
+    const user = {
+        first_name,
+        last_name,
+        email,
+        age,
+        password: createHash(password)
+    }
+
+    
+    //Si el email y la pass coinciden con los indicados se crea una propiedad con valor "admin", sino se crea con valor "user"
+    if(email === "adminCoder@coder.com" && password === "adminCod3r123"){
+      user["rol"] = "admin"
+    } else {
+      user["rol"] = "user"
+    }
+
+    let result = await usersService.addUser(user)
+
+    //Es importante que la guardemos con el mismo nombre (jwt_authorization) que despues la vamos a buscar
+    res.cookie('jwt_authorization', encriptarJWT(user), {
+      signed: true,
+      httpOnly: true
+    }) //TODO
+
+    res.status(201).json(user) //TODO
+}
+
+7- Agregamos las funciones para encriptar y desencriptar en "utils.js"
+
+import jwt from 'jsonwebtoken'
+import { JWT_PRIVATE_KEY } from '../config/auth.config.js'
+
+export function encriptarJWT(payload) {
+    const token = jwt.sign(JSON.parse(JSON.stringify(payload)), JWT_PRIVATE_KEY, { expiresIn: '24h' })
+    return token
+}
+
+export function desencriptarJWT(token) {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, JWT_PRIVATE_KEY, (err, decodedPayload) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(decodedPayload)
+            }
+        })
+    })
+}
+
+
+8- TAmbien lo ahcemos en el login (en el post a sesiones) --> sessions.controller.js
+
+export async function loginController (req, res, next) {
+
+      // Para no perder la info de ese usuario (al ya no guardarse en ninguna session en el servidor) se encripta y se envia en una cookie
+      //Es importante que la guardemos con el mismo nombre (jwt_authorization) que despues la vamos a buscar
+      res.cookie('jwt_authorization', encriptarJWT(req.user), {
+        signed: true,
+        httpOnly: true
+      }) //TODO
+  
+      res.status(201).json(req.user) //TODO
+
+  // res.status(201).json(req.session.passport.user) //--> Lo comentamos porque ya no utilizamos session
+  // next()
+}
+
+9 - removemos lo de sessions y hacemos clearCookie en el logout para que funcione --> sessions.controller.js
+
+
+export async function logoutController (req, res, next) {
+
+  res.clearCookie('jwt_authorization', {
+    signed: true,
+    httpOnly: true
+  }) //TODO es necesario incluir las mismas opciones!
+  res.sendStatus(200)
+
+
+  //lo comento poque ya no utilizamos mas sessions sino JWT
+  // req.session.destroy(err => {
+  //   if (err) return res.status(500).send({ status: "error", error: "Couldn't logout" })
+  //   res.redirect('/login') 
+  // })
+
+  // // reemplazado por atajo que provee passport
+  // req.logout(err => {
+  //   res.sendStatus(200)
+  // })
+}
+
+
+
+
 

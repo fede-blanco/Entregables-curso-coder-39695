@@ -21,10 +21,10 @@ import session from "express-session"
 // importamos "MongoStore para poder almacenar sesiones en MongoDb
 import MongoStore from "connect-mongo"
 import { errorHandler } from "./middlewares/manejoDeErroresRest.js"
-import { passportInitialize, passportSession } from "./middlewares/passport.js"
+import { passportInitialize } from "./middlewares/passport.js"
 import { apiRouter } from "./routes/api.router.js"
-import cookieParser from "cookie-parser"
 //Hay que agregar cookie-parser para poder trabajar con JWT y guardarlo en una cookie
+import cookieParser from "cookie-parser"
 import { COOKIE_SECRET } from "./config/auth.config.js"
 
 //creamos el servidos express en y lo almacenamos en la variable app
@@ -47,23 +47,23 @@ app.set("views", `./views`)
 // Osea que si le indicamos "users" buscara un archivo "users.handlebars"
 app.set("view engine", "handlebars")
 
-// // Middleware para sesiones en nuestro servidor express
-// // La función de "session" recibe como parametro un objeto con opciones que configuraran la sesión
-app.use(session({
-  store: MongoStore.create({
-    mongoUrl: MONGODB_CNX_STR_REMOTE,
-    mongoOptions: {useNewUrlParser:true, useUnifiedTopology:true},
-    // ttl:15,
-  }),
-  //el secret es necesario porque sessions trabaja siempre con cookies firmadas e cookieparse
-  secret:"fedecoderhouse",
-  resave: false,
-  saveUninitialized:false
-})) // --> la comentamos luego de agregar JWT que cumple una funcion similar
+// // // Middleware para sesiones en nuestro servidor express
+// // // La función de "session" recibe como parametro un objeto con opciones que configuraran la sesión
+// app.use(session({
+//   store: MongoStore.create({
+//     mongoUrl: MONGODB_CNX_STR_REMOTE,
+//     mongoOptions: {useNewUrlParser:true, useUnifiedTopology:true},
+//     // ttl:15,
+//   }),
+//   //el secret es necesario porque sessions trabaja siempre con cookies firmadas e cookieparse
+//   secret:"fedecoderhouse",
+//   resave: false,
+//   saveUninitialized:false
+// })) // --> la comentamos luego de agregar JWT que cumple una funcion similar
 
 //se carga passport en el servidor como middlewares
 app.use(passportInitialize)
-app.use(passportSession) // --> lo comentamos luego de agregar JWT que cumple una funcion similar
+// app.use(passportSession) // --> lo comentamos luego de agregar JWT que cumple una funcion similar
 
 //Es importante utilizar esta modalidad de rutear el static para poder poner JS y CSS en las plantillas
 app.use(express.static(__dirname+'/public'))

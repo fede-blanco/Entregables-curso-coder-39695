@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { cartViewController, loginViewController, productsViewController, profileViewController, realTimeProductsController, registerViewController } from "../controllers/web/views.controller.js"
 import { soloLogueadosView } from "../middlewares/soloLogueados.js"
-import { autenticacionUserPass } from "../middlewares/passport.js"
+import { autenticacionJwtView, autenticacionUserPass } from "../middlewares/passport.js"
 
 const viewsRouter = Router()
 
@@ -26,7 +26,7 @@ const viewsRouter = Router()
 viewsRouter.get("/realtimeproducts", realTimeProductsController) //devuelve una vista que contiene 3 formularios (agregar/actualizar/eliminar productos de "products"), una lista de productos y una vista del carrito en la posicion [0] de "carts".
 
 // seria la url --> http://localhost:8080/products
-viewsRouter.get("/products", productsViewController) //--> Devuelve una vista de los productos en "products" con estilos y su numero de pagina con la paginacion posible mediante la url
+viewsRouter.get("/products", autenticacionJwtView, productsViewController) //--> Devuelve una vista de los productos en "products" con estilos y su numero de pagina con la paginacion posible mediante la url
 
 // seria la url --> http://localhost:8080/carts/:cid
 viewsRouter.get("/carts/:cid", cartViewController) //--> devuelve una vista de un carrito seleccionado mediante su id con estilos

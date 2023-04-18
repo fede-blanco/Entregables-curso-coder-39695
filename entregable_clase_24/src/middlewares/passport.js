@@ -8,7 +8,7 @@ import { Strategy as LocalStrategy} from 'passport-local'
 //Para mas orden y porque son datos sensibles, modularizamos y traemos las variables con los datos para la estrategia de github desde un archivo auth.config.js
 import { githubCallbackUrl, githubClientSecret, githubClienteId } from '../config/auth.config.js'
 import { User } from '../models/User.js'
-import { isValidHash } from '../utils.js'
+import { encriptarJWT, isValidHash } from '../utils.js'
 import { usersService } from '../services/users.service.js'
 
 
@@ -87,6 +87,7 @@ passport.use('local', new LocalStrategy({ usernameField: 'email', }, async ( use
       user["rol"] = "user"
     }
     delete user.password
+    //Va a guardar el usuario en req.user pero no lo guardara en una session porque no las estamos utilizando
     done(null, user)
   } catch (error) {
     console.log("************** Linea 43 passport.js ************");
@@ -103,6 +104,7 @@ passport.use('github', new GithubStrategy({
   //devuelve el perfil de github que tiene mucha info, la cual podamos usar (tanta info como datos tenga cargados el ususario de github)
 
     let user
+
     try {
         user = await usersService.getUserByEmail(profile._json.email)
 
@@ -113,6 +115,9 @@ passport.use('github', new GithubStrategy({
          user["rol"] = "user"
        }
 
+       console.log("*****************116 passport.js*****************");
+       console.log(user);
+       console.log("*********************************************");
     } catch (error) {
         // @ts-ignore
         user = new User({
@@ -122,13 +127,16 @@ passport.use('github', new GithubStrategy({
             password: null,
             age: null
         })
+        if(user["email"] === "adminCoder@coder.com"){
+         user["rol"] = "admin"
+       } else {
+         user["rol"] = "user"
+       }
+       console.log("******************133 passport.js*********************");
+       console.log(user);
+       console.log("*********************************************");
         await usersService.addUser(user)
          //Si el email y la pass coinciden con los indicados se crea una propiedad con valor "admin", sino se crea con valor "user"
-         if(user["email"] === "adminCoder@coder.com"){
-          user["rol"] = "admin"
-        } else {
-          user["rol"] = "user"
-        }
     }
     done(null, user)
 }))
@@ -137,26 +145,31 @@ passport.use('github', new GithubStrategy({
 
 // estos son para cargar en express.passport y express.session como middlewares a nivel aplicacion(en main.js)
 export const passportInitialize = passport.initialize()
-export const passportSession = passport.session() // --> la comentamos luego de agregar JWT que cumple una funcion similar
+// export const passportSession = passport.session() // --> la comentamos luego de agregar JWT que cumple una funcion similar
 
 
-// esto lo tengo que agregar para que funcione passport! copiar y pegar, nada mas.
-passport.serializeUser((user, next) => { 
-  next(null, user) 
-})// --> la comentamos luego de agregar JWT que cumple una funcion similar
-passport.deserializeUser((user, next) => { 
-  next(null, user) 
-})// --> la comentamos luego de agregar JWT que cumple una funcion similar
+// // esto lo tengo que agregar para que funcione passport! copiar y pegar, nada mas.
+// passport.serializeUser((user, next) => { 
+//   next(null, user) 
+// })// --> la comentamos luego de agregar JWT que cumple una funcion similar
+// passport.deserializeUser((user, next) => { 
+//   next(null, user) 
+// })// --> la comentamos luego de agregar JWT que cumple una funcion similar
 
 
 // estos son para cargar como middlewares antes de los controladores correspondientes
 //Utilizan el passport.autenticate con la estrategia de github
-// export const authenticateLocal = 
-export const autenticacionUserPass = passport.authenticate('local', { 
+//"session: false" --> al venir por defecto en true le debo decir a las estrategias que no quiero usar session para que no ahga nada al respecto de la misma
+export const autenticacionUserPass = passport.authenticate('local', {
+  session:false, 
   failWithError: true,
   //  successRedirect: "/products" //--> no lo pongo por este medio porque lo hago en login.js
    })
 export const autenticacionPorGithub = passport.authenticate('github', {
+  session:false,
    failWithError: true,
    scope: ['user:email'] })
-export const antenticacionPorGithub_CB = passport.authenticate('github', { failWithError: true })
+export const antenticacionPorGithub_CB = passport.authenticate('github', {
+  session:false, failWithError: true })
+
+
