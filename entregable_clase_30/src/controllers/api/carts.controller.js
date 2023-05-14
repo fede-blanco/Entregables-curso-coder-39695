@@ -152,8 +152,7 @@ export async function purchaseCartProductsController(req, res){
     const cartId = req.params.cid
     const userEmail = req.user.email
     const ticket = await ticketsService.addTicket(cartId, userEmail)
-
-    return ticket
+    // return ticket
     // const cart = await cartsService.getCartById(cartId)
     // console.log(cart.products);
     // console.log("------------------------");

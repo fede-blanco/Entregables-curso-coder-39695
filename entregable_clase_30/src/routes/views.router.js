@@ -33,7 +33,7 @@ viewsRouter.get("/carts/:cid", cartViewController) //--> devuelve una vista de u
 
 
 //-------  Rutas relacionadas al "chat" ---------
-viewsRouter.get("/chat", autenticacionJwtView, RoleAuth("user"), chatViewController)
+viewsRouter.get("/chat", autenticacionJwtView,  chatViewController)
 
 
 // -------   ruta "currento" con info del usuario logueado ----

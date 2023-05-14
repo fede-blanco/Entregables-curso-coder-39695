@@ -23,6 +23,6 @@ routerCarts.put("/:cid/products/:pid", updateCartProductByIdController); //--> a
 routerCarts.delete("/:cid", deleteAllCartProductsController) //--> elimina todos los productos del carrito
 
 
-routerCarts.get("/:cid/purchase", autenticacionJwtApi, purchaseCartProductsController )
+routerCarts.post("/:cid/purchase", autenticacionJwtApi, purchaseCartProductsController )
 
 export default routerCarts;

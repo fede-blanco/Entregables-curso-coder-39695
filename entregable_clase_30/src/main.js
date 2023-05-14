@@ -70,8 +70,8 @@ app.use(express.static(__dirname+'/public'))
 
 
 // implementamos los routers a ambas rutas
-// app.use("/api/products", routerProducts)
-// app.use("/api/carts", routerCarts)
+app.use("/api/products", routerProducts)
+app.use("/api/carts", routerCarts)
 app.use("/api", apiRouter)
 app.use("/", viewsRouter)
 

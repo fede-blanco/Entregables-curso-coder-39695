@@ -13,14 +13,14 @@ class TicketsService {
         let amount = 0;
         let productsIds = []
         cart.products.forEach(async (p) => {
-            console.log(p);
+            // console.log(p);
             if (p.quantity <= p.product.stock) {
               let finalStock = p.product.stock - p.quantity
 
               let totalPrice = p.quantity * p.product.price
               amount = amount + totalPrice;
-              console.log("userEmail -->", userEmail);
-              console.log("finalStock -->", finalStock);
+              // console.log("userEmail -->", userEmail);
+              // console.log("finalStock -->", finalStock);
 
               let updatedProduct = await productsService.updateProduct(p.product._id, {stock: finalStock})
 
