@@ -41,11 +41,11 @@ export async function registerUserController (req, res, next) {
 
     let savedUserCart = await cartsService.getCartByOwnerId(addedUser._id)
 
-    console.log("****** linea 44 - users.controller.js ******");
-    console.log(createUserCart);
-    console.log("****** linea 46 - users.controller.js ******");
-    console.log(savedUserCart);
-    console.log("****** linea 48 - users.controller.js ******");
+    // console.log("****** linea 44 - users.controller.js ******");
+    // console.log(createUserCart);
+    // console.log("****** linea 46 - users.controller.js ******");
+    // console.log(savedUserCart);
+    // console.log("****** linea 48 - users.controller.js ******");
 
     //Es importante que la guardemos con el mismo nombre (jwt_authorization) que despues la vamos a buscar
     res.cookie('jwt_authorization', encriptarJWT(addedUser), {
@@ -89,23 +89,23 @@ export async function getPremiumUserController(req, res, next){
   export async function resetPasswordController(req, res,next){
 
         const userEmail = req.body.email;
-        console.log("**** linea 92 ---  users.controller.js --  resetPasswordController");
-        console.log(userEmail);
-        console.log("**** linea 94 ---  users.controller.js --  resetPasswordController");
+        // console.log("**** linea 92 ---  users.controller.js --  resetPasswordController");
+        // console.log(userEmail);
+        // console.log("**** linea 94 ---  users.controller.js --  resetPasswordController");
         const user = await usersService.getUserByEmail(userEmail)
-        console.log("**** linea 96 ---  users.controller.js --  resetPasswordController");
-        console.log(user);
-        console.log("**** linea 98 ---  users.controller.js --  resetPasswordController");
+        // console.log("**** linea 96 ---  users.controller.js --  resetPasswordController");
+        // console.log(user);
+        // console.log("**** linea 98 ---  users.controller.js --  resetPasswordController");
         const userId = user._id
-        console.log("**** linea 100 ---  users.controller.js --  resetPasswordController");
-        console.log(userId);
-        console.log("**** linea 102 ---  users.controller.js --  resetPasswordController");
+        // console.log("**** linea 100 ---  users.controller.js --  resetPasswordController");
+        // console.log(userId);
+        // console.log("**** linea 102 ---  users.controller.js --  resetPasswordController");
         
         const resetTokenObtained = await usersService.obtainTokenForPassUpdate(userId)
         
-        console.log("**** linea 106 ---  users.controller.js --  resetPasswordController");
-        console.log(resetTokenObtained);
-        console.log("**** linea 108 ---  users.controller.js --  resetPasswordController");
+        // console.log("**** linea 106 ---  users.controller.js --  resetPasswordController");
+        // console.log(resetTokenObtained);
+        // console.log("**** linea 108 ---  users.controller.js --  resetPasswordController");
 
         return resetTokenObtained;
 }
@@ -116,28 +116,28 @@ export async function resetPasswordconfirmController(req,res,next){
     const password = req.body.password;
     const email = req.query.email;
 
-    console.log("**** linea 119 ---  users.controller.js --  resetPasswordconfirmController");
-    console.log("token ---> ", token);
-    console.log("**** linea 121 ---  users.controller.js --  resetPasswordconfirmController");
-    console.log("password ---> ", password);
-    console.log("**** linea 123 ---  users.controller.js --  resetPasswordconfirmController");
-    console.log("email ---> ", email);
-    console.log("**** linea 125 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("**** linea 119 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("token ---> ", token);
+    // console.log("**** linea 121 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("password ---> ", password);
+    // console.log("**** linea 123 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("email ---> ", email);
+    // console.log("**** linea 125 ---  users.controller.js --  resetPasswordconfirmController");
 
     const user = await usersService.getUserByEmail(email)
     const userId = user._id
 
-    console.log("**** linea 130 ---  users.controller.js --  resetPasswordconfirmController");
-    console.log("user ---> ", user);
-    console.log("**** linea 132 ---  users.controller.js --  resetPasswordconfirmController");
-    console.log("userId ---> ", userId);
-    console.log("**** linea 134 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("**** linea 130 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("user ---> ", user);
+    // console.log("**** linea 132 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("userId ---> ", userId);
+    // console.log("**** linea 134 ---  users.controller.js --  resetPasswordconfirmController");
 
     const userWithUpdatedPassword = await usersService.updateUserPassword(userId,password, token)
 
-    console.log("**** linea 138 ---  users.controller.js --  resetPasswordconfirmController");
-    console.log("userWithUpdatedPassword ---> ", userWithUpdatedPassword);
-    console.log("**** linea 140 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("**** linea 138 ---  users.controller.js --  resetPasswordconfirmController");
+    // console.log("userWithUpdatedPassword ---> ", userWithUpdatedPassword);
+    // console.log("**** linea 140 ---  users.controller.js --  resetPasswordconfirmController");
 
     // redirije a login para volver a ingresar a la aplicacion
     return res.status(201).json(userWithUpdatedPassword)
