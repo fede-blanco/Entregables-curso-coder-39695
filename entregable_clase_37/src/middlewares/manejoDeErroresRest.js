@@ -28,9 +28,9 @@ export function errorHandler(error, req, res, next) {
     }
 
 
-    console.log(' ******** comienza el log del error ********')
-    console.log(error)
-    console.log(' ********** fin del log del error **********')
+    // console.log(' ******** comienza el log del error ********')
+    // console.log(error)
+    // console.log(' ********** fin del log del error **********')
 
     res.json({ status: "error", errorMsg: error.message ?? 'Error interno: causa desconocida' })
 }

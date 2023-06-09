@@ -19,21 +19,31 @@ export function isValidHash(received, stored) {
   return bcrypt.compareSync(received, stored)
 }
 
-export function encriptarJWT(payload) {
-  const token = jwt.sign(JSON.parse(JSON.stringify(payload)), JWT_PRIVATE_KEY, { expiresIn: '24h' })
+export function encriptarJWT(payload, expiration = '24h') {
+  const token = jwt.sign(JSON.parse(JSON.stringify(payload)), JWT_PRIVATE_KEY, { expiresIn: expiration })
   return token
 }
 
+// export function encriptarJWT1h(payload) {
+//   const token = jwt.sign(JSON.parse(JSON.stringify(payload)), JWT_PRIVATE_KEY, { expiresIn: '1h' })
+//   return token
+// }
+
 export function desencriptarJWT(token) {
-  return new Promise((resolve, reject) => {
-      jwt.verify(token, JWT_PRIVATE_KEY, (err, decodedPayload) => {
-          if (err) {
-              reject(err)
-          } else {
-              resolve(decodedPayload)
-          }
-      })
-  })
+    try {
+        return new Promise((resolve, reject) => {
+            jwt.verify(token, JWT_PRIVATE_KEY, (err, decodedPayload) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(decodedPayload)
+                }
+            })
+        })
+       
+    } catch (error) {
+        throw new Error(`Error de autenticacion: sesion expirada`)
+    }
 }
 
 

@@ -26,13 +26,13 @@ class UserManager {
 
   async getUserById(userId) {
     try {
-        console.log("****** linea 29 -- userManager.js");
-        console.log("userId -->", userId);
-        console.log("****** linea 31 -- userManager.js");
+        // console.log("****** linea 29 -- userManager.js");
+        // console.log("userId -->", userId);
+        // console.log("****** linea 31 -- userManager.js");
       const user =  await this.collection.findOne({ _id: userId }).lean()
-      console.log("***** linea 33 -- userManager.js");
-      console.log("user -->", user);
-      console.log("***** linea 35 -- userManager.js");
+    //   console.log("***** linea 33 -- userManager.js");
+    //   console.log("user -->", user);
+    //   console.log("***** linea 35 -- userManager.js");
       return user;
     } catch (error) {
       throw new Error(`Error en getUserById- UserManager.js --> ${error}`)

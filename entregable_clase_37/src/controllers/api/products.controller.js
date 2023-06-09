@@ -88,8 +88,8 @@ export async function addProductController(req, res,next) {
 //////Funcion que Controla la acción de la url (PUT) "/api/products/:pid" 
 export async function updateProductController(req, res) {
   try {
-    console.log("productsController -- req.body -->", req.body);
-    console.log("productsController -- req.params.pid -->", req.params.pid);
+    // console.log("productsController -- req.body -->", req.body);
+    // console.log("productsController -- req.params.pid -->", req.params.pid);
     const productToUpdate = req.body.prod;
     const productId = req.params.pid;
     // const updatedProduct = await productsManager.updateProduct(
@@ -100,7 +100,7 @@ export async function updateProductController(req, res) {
       productId,
       productToUpdate
     );
-    console.log("productsController -- updatedProduct -->", updatedProduct);
+    // console.log("productsController -- updatedProduct -->", updatedProduct);
     res.json(updatedProduct);
   } catch (error) {
     throw new Error(`Error en updateProductController -- > products.controller.js + ${error}`);

@@ -6,7 +6,7 @@ class TicketsRepository {
     try {
        const addedTicket = await ticketManager.addTicket(ticket)
           // console.log("ticket -->", addedTicket);
-          console.log(addedTicket);
+        //   console.log(addedTicket);
           return addedTicket;
         } catch(err) {
           throw new Error(`Error en addTicket - ticketRepository -- ${err}`);

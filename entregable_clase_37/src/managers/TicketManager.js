@@ -2,8 +2,8 @@ import ticketModel from "../models/Ticket.model.js"
 
 
 class TicketManager {
-  constructor(ticketDB) {
-    this.collection = ticketDB
+  constructor(ticketModel) {
+    this.collection = ticketModel
   }
 
   async addTicket(ticket) {

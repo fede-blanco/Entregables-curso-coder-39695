@@ -33,13 +33,13 @@ function validateCategory(valor){
   return valor;
 }
 function validateOwner(valor){
-    console.log("******** linea 36 Product.js  *******");
-    console.log(valor);
-    console.log("******** linea 38 Product.js  *******");
+    // console.log("******** linea 36 Product.js  *******");
+    // console.log(valor);
+    // console.log("******** linea 38 Product.js  *******");
     if(!valor){valor = "647f452ec51b6db597d98a0c"}
-    console.log("******** linea 40 Product.js  *******");
-    console.log(valor);
-    console.log("******** linea 42 Product.js  *******");
+    // console.log("******** linea 40 Product.js  *******");
+    // console.log(valor);
+    // console.log("******** linea 42 Product.js  *******");
     // if(typeof valor !== "string" ) throw new Error("la categoría debe ser una cadena de caracteres - Product.js")
     //   if(!valor) throw new Error("no se ingresó la categoría - Product.js")
 

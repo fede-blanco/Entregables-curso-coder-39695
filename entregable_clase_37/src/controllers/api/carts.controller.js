@@ -40,13 +40,13 @@ export async function addProdToCartByIdController(req, res,next) {
     
     const cartOwner = cart.cartOwner.toString()
     const productOwner = product.owner.toString()
-    console.log("******* linea 43 - carts.controller.js");
-    console.log("cartOwner --> ", cartOwner);
-    console.log("cartOwner --> ", cartOwner.toString());
-    console.log("******* linea 45 - carts.controller.js");
-    console.log("productOwner --> ", productOwner);
-    console.log("productOwner --> ", productOwner.toString());
-    console.log("******* linea 47 - carts.controller.js");
+    // console.log("******* linea 43 - carts.controller.js");
+    // console.log("cartOwner --> ", cartOwner);
+    // console.log("cartOwner --> ", cartOwner.toString());
+    // console.log("******* linea 45 - carts.controller.js");
+    // console.log("productOwner --> ", productOwner);
+    // console.log("productOwner --> ", productOwner.toString());
+    // console.log("******* linea 47 - carts.controller.js");
 
     if(cartOwner === productOwner){
         console.log(`**********\ncartOwner --> "${cartOwner}" and productOwner --> ${productOwner} are the same person.\n********`);

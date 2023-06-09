@@ -146,10 +146,10 @@ io.on("connection", (socket) => {
     // const cartSelected = carts[0]
     const cartSelectedId = cartId
 
-    console.log("********  linea 146 - main.js ********");
-    console.log(cartId);
-    console.log(productId);
-    console.log("********  linea 149 - main.js ********");
+    // console.log("********  linea 146 - main.js ********");
+    // console.log(cartId);
+    // console.log(productId);
+    // console.log("********  linea 149 - main.js ********");
 
     //Le saco las comillas de los extremos
     const prodSinComillas = productId.replace(/`/g, '')
@@ -179,10 +179,10 @@ io.on("connection", (socket) => {
 
     const cartSelectedId = cartId
 
-    console.log("********  linea 182 - main.js ********");
-    console.log(cartId);
-    console.log(productId);
-    console.log("********  linea 185 - main.js ********");
+    // console.log("********  linea 182 - main.js ********");
+    // console.log(cartId);
+    // console.log(productId);
+    // console.log("********  linea 185 - main.js ********");
     
     // const prodSinComillas = productId.replace(/`/g, '')
     // // console.log("main.js -- 'addProductToCart' --->", prodSinComillas);

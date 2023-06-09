@@ -23,9 +23,9 @@ class UserRepository {
 
     async getUserById(userId){
       try {
-        console.log("****** linea 26 -- users.repository.js");
-        console.log("userId -->", userId);
-        console.log("****** linea 28 -- users.repository.js");
+        // console.log("****** linea 26 -- users.repository.js");
+        // console.log("userId -->", userId);
+        // console.log("****** linea 28 -- users.repository.js");
         return await userManager.getUserById(userId);
       } catch (error) {
         throw new Error(`Error en getUserById - user.repository.js --> ${error}`)

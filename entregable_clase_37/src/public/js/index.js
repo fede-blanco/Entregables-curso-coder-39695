@@ -41,11 +41,11 @@ if (buttonAdd) {
     .then(response => {
       if (response.status === 201) {
         const savedProduct = response.json()
-        console.log("***** line 44 -- index.js *****");
-        console.log(response);
-        console.log("***** line 46 -- index.js *****");
-        console.log(savedProduct);
-        console.log("***** line 48 -- index.js *****");
+        // console.log("***** line 44 -- index.js *****");
+        // console.log(response);
+        // console.log("***** line 46 -- index.js *****");
+        // console.log(savedProduct);
+        // console.log("***** line 48 -- index.js *****");
     }
     })
 
@@ -156,10 +156,10 @@ if (deleteFromCartButtons) {
       button.addEventListener("click", async (e) => {
           const productId = e.target.id
           const cartId = document.querySelector(".cart").id
-          console.log("********  linea 135 - index.js ********");
-          console.log(cartId);
-          console.log(productId);
-          console.log("********  linea 138 - index.js ********");
+        //   console.log("********  linea 135 - index.js ********");
+        //   console.log(cartId);
+        //   console.log(productId);
+        //   console.log("********  linea 138 - index.js ********");
       socket.emit("deleteProductFromCart", {cartId: cartId,  productId: productId})
     })
   })
@@ -173,10 +173,10 @@ if (addToCartButtons) {
       // Obtiene el id del producto desde el boton
       const productId = button.id
       const cartId = document.querySelector(".cart").id
-      console.log("********  linea 152 - index.js ********");
-      console.log(cartId);
-      console.log(productId);
-      console.log("********  linea 155 - index.js ********");
+    //   console.log("********  linea 152 - index.js ********");
+    //   console.log(cartId);
+    //   console.log(productId);
+    //   console.log("********  linea 155 - index.js ********");
 
                   // se hace fetch a la api que crea productos
     fetch(`/api/carts/${cartId}/products/${productId}`, {
@@ -189,12 +189,12 @@ if (addToCartButtons) {
     .then(response => {
       if (response.status === 201) {
         const savedProduct = response.json()
-        console.log("***** line 277 -- index.js *****");
-        console.log(response);
-        console.log("***** line 279 -- index.js *****");
-        console.log(savedProduct);
-        console.log("***** line 281 -- index.js *****");
-        console.log(savedProduct.cart);
+        // console.log("***** line 277 -- index.js *****");
+        // console.log(response);
+        // console.log("***** line 279 -- index.js *****");
+        // console.log(savedProduct);
+        // console.log("***** line 281 -- index.js *****");
+        // console.log(savedProduct.cart);
     }
     })
 
@@ -279,10 +279,10 @@ socket.on("updateProductsList", (prodListItems) => {
         // Obtiene el id del producto desde el boton
         const productId = button.id
         const cartId = document.querySelector(".cart").id
-        console.log("********  linea 261 - index.js ********");
-        console.log(cartId);
-        console.log(productId);
-        console.log("********  linea 264 - index.js ********");
+        // console.log("********  linea 261 - index.js ********");
+        // console.log(cartId);
+        // console.log(productId);
+        // console.log("********  linea 264 - index.js ********");
 
         // ---se envia el producto obtenido del formulario
         socket.emit("addProductToCart", {cartId: cartId,  productId: productId})
@@ -337,10 +337,10 @@ socket.on("updateCartList", (cartResponse) => {
         button.addEventListener("click", async (e) => {
         const cartId = button.dataset.cartId;
         const productId = button.id
-        console.log("********  linea 279 - index.js ********");
-        console.log(cartId);
-        console.log(productId);
-        console.log("********  linea 282 - index.js ********");
+        // console.log("********  linea 279 - index.js ********");
+        // console.log(cartId);
+        // console.log(productId);
+        // console.log("********  linea 282 - index.js ********");
         // const cartId = document.querySelector(".cart").id
         socket.emit("deleteProductFromCart", {cartId: cartId,  productId: productId})
       })

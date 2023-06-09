@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { cartViewController, chatViewController, loginViewController, productsController, productsViewController, profileViewController, realTimeProductsController, registerViewController } from "../controllers/web/views.controller.js"
+import { cartViewController, chatViewController, loginViewController, productsController, productsViewController, profileViewController, realTimeProductsController, registerViewController, resetPasswordMailViewController, resetPasswordFormViewController } from "../controllers/web/views.controller.js"
 import { RoleAuth, RoleAuthMany, soloLogueadosView } from "../middlewares/soloLogueados.js"
 import { autenticacionJwtAlreadyLogged, autenticacionJwtView, autenticacionUserPass } from "../middlewares/passport.js"
 
@@ -33,8 +33,15 @@ viewsRouter.get("/carts/:cid", cartViewController) //--> devuelve una vista de u
 viewsRouter.get("/chat", autenticacionJwtView,  chatViewController)
 
 
-// -------   ruta "currento" con info del usuario logueado ----
+// -------   ruta "current" con info del usuario logueado ----
 viewsRouter.get("/current", autenticacionJwtView, profileViewController)
+
+
+// -------   ruta "resetPasswordMail" que tiene un boton para enviar un mail ingresado  ----
+viewsRouter.get("/resetPasswordMail", resetPasswordMailViewController)
+
+// -------   ruta "resetPasswordForm" muestra un formulario que tiene un boton para enviar un formulario ocn la nueva contraseña  ----
+viewsRouter.get('/resetPasswordForm', resetPasswordFormViewController)
 
 
 
