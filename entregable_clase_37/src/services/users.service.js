@@ -117,7 +117,10 @@ class UserService {
         try {
             desencriptarJWT(token)
         } catch (error) {
-            throw new Error (`pedido invalido: sesion expirada - 2`)   
+
+            this.obtainTokenForPassUpdate(userId)
+            // throw new Error (`pedido invalido: sesion expirada - 2`)   
+
         }
 
         // Comparo los tokens (el q memandaron y el que tengo guardado)
