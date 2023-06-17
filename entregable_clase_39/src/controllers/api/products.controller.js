@@ -90,15 +90,13 @@ export async function updateProductController(req, res) {
   try {
     // console.log("productsController -- req.body -->", req.body);
     // console.log("productsController -- req.params.pid -->", req.params.pid);
-    const productToUpdate = req.body.prod;
+    const newProperties = req.body.prod;
     const productId = req.params.pid;
-    // const updatedProduct = await productsManager.updateProduct(
-    //   productId,
-    //   productToUpdate
-    // );
+
+    
     const updatedProduct = await productsService.updateProduct(
       productId,
-      productToUpdate
+      newProperties
     );
     // console.log("productsController -- updatedProduct -->", updatedProduct);
     res.json(updatedProduct);
